@@ -38,7 +38,7 @@
 #
 # Set default parameters
 make_path="${PWD}"
-openwrt_dir="openwrt"
+openwrt_dir="GTwrt"
 imagebuilder_path="${make_path}/${openwrt_dir}"
 custom_files_path="${make_path}/config/imagebuilder/files"
 custom_config_file="${make_path}/config/imagebuilder/config"
@@ -75,7 +75,7 @@ download_imagebuilder() {
     fi
 
     # Downloading imagebuilder files
-    download_file="https://downloads.${op_sourse}.org/releases/${op_branch}/targets/${target_system}/${op_sourse}-imagebuilder-${op_branch}-${target_name}.Linux-x86_64.tar.xz"
+    download_file="https://downloads.openwrt.org/releases/23.05.0-rc3/targets/armvirt/64-imagebuilder-23.05.0-rc3-armvirt-64.Linux-x86_64.tar.xz"
     wget -q ${download_file}
     [[ "${?}" -eq "0" ]] || error_msg "Wget download failed: [ ${download_file} ]"
 
