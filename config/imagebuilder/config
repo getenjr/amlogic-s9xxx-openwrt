@@ -1,17 +1,3 @@
-#======================================================================================
-#
-# https://github.com/ophub/amlogic-s9xxx-openwrt
-# Description: Build OpenWrt with Image Builder
-#
-# Download from: https://downloads.openwrt.org/releases
-#                https://downloads.immortalwrt.org/releases
-#
-# Documentation: https://openwrt.org/docs/guide-user/additional-software/imagebuilder
-# Instructions:  Download OpenWrt firmware from the official OpenWrt,
-#                Use Image Builder to add packages, lib, theme, app and i18n, etc.
-#
-#======================================================================================
-#
 #========================================================================================================================
 # Description: Automatically Build ImmortalWrt for Amlogic
 # Function: Add or remove software packages, etc.
