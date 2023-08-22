@@ -318,27 +318,6 @@ cp ${GITHUB_WORKSPACE}/amlogic-s9xxx/common-files/patches/zsh/.zshrc .
 cp ${GITHUB_WORKSPACE}/amlogic-s9xxx/common-files/patches/zsh/example.zsh ./.oh-my-zsh/custom/example.zsh
 popd
 
-# Set modemmanager to disable
-mkdir -p feeds/luci/protocols/luci-proto-modemmanager/root/etc/uci-defaults
-cat << EOF > feeds/luci/protocols/luci-proto-modemmanager/root/etc/uci-defaults/70-modemmanager
-[ -f /etc/init.d/modemmanager ] && /etc/init.d/modemmanager disable
-exit 0
-EOF
-
-# Openclash Config Editor by Tiny File Manager
-# Copyright 2022 by lynxnexy <https://github.com/lynxnexy/immortalwrt>
-# 
-
-cat << EOF > package/luci-app-openclash/luasrc/view/openclash/editor.htm
-<%+header%>
-<div class="cbi-map">
-<iframe id="editor" style="width: 100%; min-height: 100vh; border: none; border-radius: 2px;"></iframe>
-</div>
-<script type="text/javascript">
-document.getElementById("editor").src = "http://" + window.location.hostname + "/tinyfm/tinyfm.php?p=etc/openclash";
-</script>
-<%+footer%>
-
     sync && sleep 3
     echo -e "${INFO} [ openwrt/bin/targets/*/* ] directory status: $(ls bin/targets/*/* -l 2>/dev/null)"
     echo -e "${SUCCESS} The rebuild is successful, the current path: [ ${PWD} ]"
