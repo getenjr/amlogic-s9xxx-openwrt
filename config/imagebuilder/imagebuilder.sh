@@ -111,12 +111,6 @@ adjust_settings() {
     echo -e "${INFO} [ openwrt ] directory status: $(ls -al 2>/dev/null)"
 }
 
-# Modify default IP（FROM 192.168.1.1 CHANGE TO 192.168.31.4）
-# sed -i 's/192.168.1.1/11.12.1.1/g' package/base-files/files/bin/config_generate
-
-# Add the default password for the 'root' user（Change the empty password to 'password'）
-sed -i 's/root::0:0:99999:7:::/root:$1$V4UetPzk$CYXluq4wUazHjmCDBCqXF.:0:0:99999:7:::/g' package/base-files/files/etc/shadow
-
 # Set ssid
 sed -i "s/ImmortalWrt/KarnadiWrt/g" package/kernel/mac80211/files/lib/wifi/mac80211.sh
 
