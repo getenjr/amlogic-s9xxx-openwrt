@@ -139,8 +139,8 @@ custom_packages() {
     # Add p7zip
 svn co https://github.com/hubutui/p7zip-lede/trunk package/p7zip
 
-# Add luci-app-tinyfilemanager
-# svn co https://github.com/lynxnexy/luci-app-tinyfilemanager/trunk package/luci-app-tinyfilemanager
+#Add luci-app-tinyfilemanager
+svn co https://github.com/lynxnexy/luci-app-tinyfilemanager/trunk package/luci-app-tinyfilemanager
 svn co https://github.com/helmiau/helmiwrt-packages/trunk/luci-app-tinyfm package/luci-app-tinyfm
 svn co https://github.com/helmiau/helmiwrt-packages/trunk/luci-app-libernet-plus package/luci-app-libernet-plus
 svn co https://github.com/helmiau/helmiwrt-packages/trunk/luci-app-libernet-bin package/luci-app-libernet-bin
