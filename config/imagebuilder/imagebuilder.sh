@@ -136,65 +136,6 @@ custom_packages() {
     [[ "${?}" -eq "0" ]] || error_msg "[ ${amlogic_i18n} ] download failed!"
     echo -e "${INFO} The [ ${amlogic_i18n} ] is downloaded successfully."
 
-    # Add p7zip
-svn co https://github.com/hubutui/p7zip-lede/trunk package/p7zip
-
-#Add luci-app-tinyfilemanager
-svn co https://github.com/lynxnexy/luci-app-tinyfilemanager/trunk package/luci-app-tinyfilemanager
-svn co https://github.com/helmiau/helmiwrt-packages/trunk/luci-app-tinyfm package/luci-app-tinyfm
-svn co https://github.com/helmiau/helmiwrt-packages/trunk/luci-app-libernet-plus package/luci-app-libernet-plus
-svn co https://github.com/helmiau/helmiwrt-packages/trunk/luci-app-libernet-bin package/luci-app-libernet-bin
-svn co https://github.com/helmiau/helmiwrt-packages/trunk/luci-app-mulimiter package/luci-app-mulimiter
-svn co https://github.com/helmiau/helmiwrt-packages/trunk/luci-app-myxllite package/luci-app-myxllite
-svn co https://github.com/helmiau/helmiwrt-packages/trunk/luci-app-netmon package/luci-app-netmon
-svn co https://github.com/helmiau/helmiwrt-packages/trunk/luci-app-openspeedtest package/luci-app-openspeedtest
-svn co https://github.com/helmiau/helmiwrt-packages/trunk/badvpn package/badvpn
-svn co https://github.com/helmiau/helmiwrt-packages/trunk/corkscrew package/corkscrew
-
-rm -rf feeds/luci/applications/luci-app-filebrowser
-svn co https://github.com/happy902/luci-app-filebrowser/trunk package/luci-app-filebrowser
-
-# Add luci-app-adguardhome
-svn co https://github.com/rufengsuixing/luci-app-adguardhome/trunk package/luci-app-adguardhome
-
-# Set adguardhome-core
-mkdir -p files/usr/bin/AdGuardHome
-AGH_CORE=$(curl -sL https://api.github.com/repos/AdguardTeam/AdGuardHome/releases | grep /AdGuardHome_linux_arm64 | awk -F '"' '{print $4}' | sed -n '1p')
-wget -qO- $AGH_CORE | tar xOvz > files/usr/bin/AdGuardHome/AdGuardHome
-chmod +x files/usr/bin/AdGuardHome/AdGuardHome
-
-# Set yt-dlp
-mkdir -p files/bin
-curl -sL https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o files/bin/yt-dlp
-chmod +x files/bin/yt-dlp
-
-# Set speedtest
-mkdir -p files/bin
-wget -qO- https://install.speedtest.net/app/cli/ookla-speedtest-1.2.0-linux-aarch64.tgz | tar xOvz > files/bin/speedtest
-chmod +x files/bin/speedtest
-
-# Add luci-app-openclash
-rm -rf feeds/luci/applications/luci-app-openclash
-svn co https://github.com/vernesong/OpenClash/trunk/luci-app-openclash package/luci-app-openclash
-pushd package/luci-app-openclash/tools/po2lmo
-make && sudo make install
-popd
-
-# Add luci-app-3ginfo
-# svn co https://github.com/lynxnexy/luci-app-3ginfo/trunk package/luci-app-3ginfo
-# Add luci-app-atinout-mod
-svn co https://github.com/lynxnexy/luci-app-atinout-mod/trunk package/luci-app-atinout-mod
-
-# internet detector
-svn co https://github.com/gSpotx2f/luci-app-internet-detector/trunk/luci-app-internet-detector package/luci-app-internet-detector
-svn co https://github.com/gSpotx2f/luci-app-internet-detector/trunk/internet-detector package/internet-detector
-
-# git clone https://github.com/tmn505/openwrt-dvb package/openwrt-dvb
-
-# iStore
-svn co https://github.com/linkease/istore-ui/trunk/app-store-ui package/app-store-ui
-svn co https://github.com/linkease/istore/trunk/luci package/istore
-
     sync && sleep 3
     echo -e "${INFO} [ packages ] directory status: $(ls packages -l 2>/dev/null)"
 }
@@ -225,27 +166,6 @@ custom_files() {
         [[ -d "files" ]] || mkdir -p files
         cp -rf ${custom_files_path}/* files
         
-# Set clash-core
-mkdir -p files/etc/openclash/core
-# VERNESONG_CORE=$(curl -sL https://api.github.com/repos/vernesong/OpenClash/releases/tags/Clash | grep /clash-linux-armv8 | awk -F '"' '{print $4}')
-# VERNESONG_TUN=$(curl -sL https://api.github.com/repos/vernesong/OpenClash/releases/tags/TUN-Premium | grep /clash-linux-armv8 | awk -F '"' '{print $4}')
-# VERNESONG_GAME=$(curl -sL https://api.github.com/repos/vernesong/OpenClash/releases/tags/TUN | grep /clash-linux-armv8 | awk -F '"' '{print $4}')
-DREAMACRO_CORE=$(curl -sL https://api.github.com/repos/Dreamacro/clash/releases | grep /clash-linux-armv8 | awk -F '"' '{print $4}' | sed -n '1p')
-DREAMACRO_TUN=$(curl -sL https://api.github.com/repos/Dreamacro/clash/releases/tags/premium | grep /clash-linux-armv8 | awk -F '"' '{print $4}')
-META_CORE=$(curl -sL https://api.github.com/repos/MetaCubeX/Clash.Meta/releases | grep /Clash.Meta-linux-arm64-v | awk -F '"' '{print $4}' | sed -n '1p')
-# wget -qO- $VERNESONG_CORE | tar xOvz > files/etc/openclash/core/clash_vernesong
-# wget -qO- $VERNESONG_TUN | gunzip -c > files/etc/openclash/core/clash_tun_vernesong
-# wget -qO- $VERNESONG_GAME | tar xOvz > files/etc/openclash/core/clash_game_vernesong
-wget -qO- $DREAMACRO_CORE | gunzip -c > files/etc/openclash/core/clash
-wget -qO- $DREAMACRO_TUN | gunzip -c > files/etc/openclash/core/clash_tun
-wget -qO- $META_CORE | gunzip -c > files/etc/openclash/core/clash_meta
-chmod +x files/etc/openclash/core/clash*
-
-# Set v2ray-rules-dat
-mkdir -p files/etc/openclash
-curl -sL https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat -o files/etc/openclash/GeoSite.dat
-curl -sL https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat -o files/etc/openclash/GeoIP.dat
-
         sync && sleep 3
         echo -e "${INFO} [ files ] directory status: $(ls files -l 2>/dev/null)"
     else
@@ -306,17 +226,6 @@ svn co https://github.com/karnadii/rooter/trunk/package/rooter/0splash/ext-splas
 svn co https://github.com/karnadii/rooter/trunk/package/rooter/0optionalapps/bwallocate package/bwallocate
 svn co https://github.com/karnadii/rooter/trunk/package/rooter/0optionalapps/bwmon package/bwmon
 svn co https://github.com/karnadii/rooter/trunk/package/rooter/0optionalapps/ext-throttle package/ext-throttle
-
-# Set oh-my-zsh
-mkdir -p files/root
-pushd files/root
-git clone https://github.com/robbyrussell/oh-my-zsh ./.oh-my-zsh
-git clone https://github.com/zsh-users/zsh-autosuggestions ./.oh-my-zsh/custom/plugins/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ./.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
-git clone https://github.com/zsh-users/zsh-completions ./.oh-my-zsh/custom/plugins/zsh-completions
-cp ${GITHUB_WORKSPACE}/amlogic-s9xxx/common-files/patches/zsh/.zshrc .
-cp ${GITHUB_WORKSPACE}/amlogic-s9xxx/common-files/patches/zsh/example.zsh ./.oh-my-zsh/custom/example.zsh
-popd
 
     sync && sleep 3
     echo -e "${INFO} [ openwrt/bin/targets/*/* ] directory status: $(ls bin/targets/*/* -l 2>/dev/null)"
